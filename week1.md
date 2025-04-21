@@ -129,6 +129,87 @@ print(min_subarray_len(target, nums))  # Output: 2
 
 ---
 
+### Problem 4: [Permutation in String](https://leetcode.com/problems/permutation-in-string/)
+
+#### Problem Statement:
+Given two strings `s1` and `s2`, return `true` if `s2` contains a permutation of `s1`, or `false` otherwise.
+
+#### Solution:
+```python
+# filepath: /Users/maulik/Maulik/DailyDataStructreProblems/week1_sliding_window.py
+
+from collections import Counter
+
+def check_inclusion(s1, s2):
+    s1_count = Counter(s1)
+    window_count = Counter()
+    start = 0
+
+    for end in range(len(s2)):
+        window_count[s2[end]] += 1
+
+        # If the window size exceeds the size of s1, shrink it
+        if end - start + 1 > len(s1):
+            if window_count[s2[start]] == 1:
+                del window_count[s2[start]]
+            else:
+                window_count[s2[start]] -= 1
+            start += 1
+
+        # Check if the current window matches the frequency of s1
+        if window_count == s1_count:
+            return True
+
+    return False
+
+# Example Usage
+s1 = "ab"
+s2 = "eidbaooo"
+print(check_inclusion(s1, s2))  # Output: True
+```
+
+---
+
+### Problem 5: [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
+
+#### Problem Statement:
+You are given an array of integers `nums`, and there is a sliding window of size `k` that moves from the left to the right. Return the maximum value in each window.
+
+#### Solution:
+```python
+# filepath: /Users/maulik/Maulik/DailyDataStructreProblems/week1_sliding_window.py
+
+from collections import deque
+
+def max_sliding_window(nums, k):
+    result = []
+    dq = deque()  # Store indices of elements in the current window
+
+    for i in range(len(nums)):
+        # Remove indices that are out of the current window
+        if dq and dq[0] < i - k + 1:
+            dq.popleft()
+
+        # Remove indices of smaller elements as they are not useful
+        while dq and nums[dq[-1]] < nums[i]:
+            dq.pop()
+
+        dq.append(i)
+
+        # Add the maximum element of the current window to the result
+        if i >= k - 1:
+            result.append(nums[dq[0]])
+
+    return result
+
+# Example Usage
+nums = [1, 3, -1, -3, 5, 3, 6, 7]
+k = 3
+print(max_sliding_window(nums, k))  # Output: [3, 3, 5, 5, 6, 7]
+```
+
+---
+
 ## Summary
 
 The sliding window pattern is a powerful tool for solving problems efficiently. By maintaining a subset of the data and reusing computations, it significantly reduces time complexity compared to brute-force approaches. Practice the problems above to master this technique!
