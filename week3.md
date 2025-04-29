@@ -204,6 +204,38 @@ print(is_palindrome(head))  # Output: True
 
 ---
 
+### Problem 6: [Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)
+
+#### Problem Statement:
+Given an array of integers `nums` containing `n + 1` integers where each integer is in the range `[1, n]` inclusive, there is exactly one repeated number. Return this repeated number.
+
+#### Solution:
+```python
+# filepath: /Users/maulik/Maulik/DailyDataStructreProblems/week3_fast_slow_pointer.py
+
+def find_duplicate(nums):
+    slow, fast = nums[0], nums[0]
+
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break
+
+    slow = nums[0]
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+
+    return slow
+
+# Example Usage
+nums = [1, 3, 4, 2, 2]
+print(find_duplicate(nums))  # Output: 2
+```
+
+---
+
 ## Summary
 
 The Fast and Slow Pointer Pattern is a powerful technique for solving problems involving cyclic data structures or linked lists. By using two pointers moving at different speeds, you can efficiently detect cycles, find the middle of a list, or solve other related problems. Practice the problems above to master this technique!
