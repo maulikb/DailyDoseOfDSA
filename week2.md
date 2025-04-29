@@ -160,6 +160,72 @@ print(max_area(height))  # Output: 49
 
 ---
 
+### Problem 5: [Squares of a Sorted Array](https://leetcode.com/problems/squares-of-a-sorted-array/)
+
+#### Problem Statement:
+Given an integer array `nums` sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+
+#### Solution:
+```python
+# filepath: /Users/maulik/Maulik/DailyDataStructreProblems/week2_two_pointers.py
+
+def sorted_squares(nums):
+    result = [0] * len(nums)
+    left, right = 0, len(nums) - 1
+    write_index = len(nums) - 1
+
+    while left <= right:
+        left_square = nums[left] ** 2
+        right_square = nums[right] ** 2
+
+        if left_square > right_square:
+            result[write_index] = left_square
+            left += 1
+        else:
+            result[write_index] = right_square
+            right -= 1
+
+        write_index -= 1
+
+    return result
+
+# Example Usage
+nums = [-4, -1, 0, 3, 10]
+print(sorted_squares(nums))  # Output: [0, 1, 9, 16, 100]
+```
+
+---
+
+### Problem 6: [Backspace String Compare](https://leetcode.com/problems/backspace-string-compare/)
+
+#### Problem Statement:
+Given two strings `s` and `t`, return `true` if they are equal when both are typed into empty text editors. `#` means a backspace character.
+
+#### Solution:
+```python
+# filepath: /Users/maulik/Maulik/DailyDataStructreProblems/week2_two_pointers.py
+
+def backspace_compare(s, t):
+    def build_string(string):
+        result = []
+        for char in string:
+            if char == '#':
+                if result:
+                    result.pop()
+            else:
+                result.append(char)
+        return result
+
+    return build_string(s) == build_string(t)
+
+# Example Usage
+s = "ab#c"
+t = "ad#c"
+print(backspace_compare(s, t))  # Output: True
+```
+
+---
+
 ## Summary
 
 The Two Pointers Pattern is a versatile and efficient approach for solving problems involving arrays or strings. By leveraging two pointers, you can reduce the time complexity of many problems from `O(n^2)` to `O(n)`. Practice the problems above to master this technique!
